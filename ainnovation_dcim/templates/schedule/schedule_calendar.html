@@ -1,0 +1,164 @@
+{% extends 'schedule/base_duty.html' %}
+
+{% load static %}
+
+{% block title %}{{ block.super }} - 近期排班{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>值班日历</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="col-sm-3">
+    <div class="ibox float-e-margins">
+        <div class="card-headermigrations
+__init__.py
+admin.py
+apps.py
+models.py
+tests.py
+urls.py
+views.py">
+            <h5>值班人</h5>
+        </div>
+        <div class="ibox-content">
+            <div id='external-events'>
+                <p>姓名</p>
+                {% for employee in all_employee %}
+                <div class='external-event navy-bg'>{{ employee.name }}</div>
+                {% endfor %}
+                <p class="m-t">
+                    <input type='checkbox' id='drop-remove' class="i-checks"/>
+                    <label for='drop-remove'>移动后删除</label>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <h2><a href="{% url 'schedule:schedule_list' %}">列表视图</a></h2>
+            查看原列表视图
+        </div>
+    </div>
+</div>
+<div class="col-sm-9">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>值班表 </h5>
+        </div>
+        <div class="ibox-content">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'rest_framework/js/jquery-3.5.1.min.js' %}"></script>
+
+<!-- Full Calendar -->
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.js"></script>
+
+<!-- iCheck -->
+<script src="{% static 'icheck/icheck.js' %}"></script>
+<script>
+        {#let scheduleData = '';#}
+
+        $.ajax({
+            url: '{% url "schedule:schedule_calendar_data" %}',
+            type: 'GET',
+            dataType: 'json',
+            async:false,
+            success: function (data, status) {
+                scheduleData = data
+            }
+        });
+        console.log(scheduleData);
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            /* initialize the external events
+             -----------------------------------------------------------------*/
+
+            $('#external-events div.external-event').each(function () {
+
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true, // will cause the event to go back to its
+                    revertDuration: 0 //  original position after the drag
+                });
+
+            });
+
+            /* initialize the calendar
+             -----------------------------------------------------------------*/
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next,today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay,listWeek'
+                },
+                firstDay: 1,  // 每月第一列改为周一
+                height: 650,  //日历表格高度
+                editable: false,
+                droppable: false, // this allows things to be dropped onto the calendar !!!
+                drop: function (date, allDay) { // this function is called when something is dropped
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                },
+                events: scheduleData,
+            });
+        });
+    </script>
+{% endblock %}

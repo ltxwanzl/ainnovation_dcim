@@ -1,0 +1,54 @@
+{% extends 'schedule/base_duty.html' %}
+
+{% block title %}{{ block.super }} - 法定工作日·节假日管理{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>法定工作日·节假日</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>法定工作日·节假日</h5>
+    </div>
+    <div class="ibox-content">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>类型</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for legal_day in legal_day_list %}
+            <tr
+                    {% if legal_day.legal_type == 0 %}
+                    style="background-color:#CEFFCE;"
+                    {% elif legal_day.legal_type == 1 %}
+                    style="background-color:#FFE6D9;"
+                    {% endif %}
+            >
+                <td>{{ legal_day.date }}</td>
+                <td>{{ legal_day.get_legal_type_display }}</td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="{% url 'schedule:legal_day_update' legal_day.id %}">更新</a>
+                    <a class="btn btn-danger btn-xs" href="{% url 'schedule:legal_day_delete' legal_day.id %}">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <a class="btn btn-primary btn-sm" href="{% url 'schedule:legal_day_create' %}">添加</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

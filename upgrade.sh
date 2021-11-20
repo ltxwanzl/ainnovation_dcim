@@ -62,12 +62,12 @@ else
 fi
 
 # Apply any database migrations
-COMMAND="python3 netbox/manage.py migrate"
+COMMAND="python3 ainnovation_dcim/manage.py migrate"
 echo "Applying database migrations ($COMMAND)..."
 eval $COMMAND || exit 1
 
 # Trace any missing cable paths (not typically needed)
-COMMAND="python3 netbox/manage.py trace_paths --no-input"
+COMMAND="python3 ainnovation_dcim/manage.py trace_paths --no-input"
 echo "Checking for missing cable paths ($COMMAND)..."
 eval $COMMAND || exit 1
 
@@ -77,17 +77,17 @@ echo "Building documentation ($COMMAND)..."
 eval $COMMAND || exit 1
 
 # Collect static files
-COMMAND="python3 netbox/manage.py collectstatic --no-input"
+COMMAND="python3 ainnovation_dcim/manage.py collectstatic --no-input"
 echo "Collecting static files ($COMMAND)..."
 eval $COMMAND || exit 1
 
 # Delete any stale content types
-COMMAND="python3 netbox/manage.py remove_stale_contenttypes --no-input"
+COMMAND="python3 ainnovation_dcim/manage.py remove_stale_contenttypes --no-input"
 echo "Removing stale content types ($COMMAND)..."
 eval $COMMAND || exit 1
 
 # Delete any expired user sessions
-COMMAND="python3 netbox/manage.py clearsessions"
+COMMAND="python3 ainnovation_dcim/manage.py clearsessions"
 echo "Removing expired user sessions ($COMMAND)..."
 eval $COMMAND || exit 1
 
@@ -109,5 +109,5 @@ if [ -v WARN_MISSING_VENV ]; then
   echo "--------------------------------------------------------------------"
 fi
 
-echo "Upgrade complete! Don't forget to restart the NetBox services:"
-echo "  > sudo systemctl restart netbox netbox-rq"
+echo "Upgrade complete! Don't forget to restart the dcim services:"
+echo "  > sudo systemctl restart ainnovation_dcim netbox-rq"

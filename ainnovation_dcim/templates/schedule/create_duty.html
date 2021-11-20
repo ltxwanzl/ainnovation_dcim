@@ -1,0 +1,105 @@
+{% extends 'schedule/base_duty.html' %}
+{% load static %}
+{% load duty_template_tags %}
+
+
+{% block title %}{{ block.super }} - 生成值班{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>生成值班</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>根据已存在的日期数据，生成值班表</h5>
+    </div>
+    <div class="ibox-content">
+        <p>若修改日期数据，需要重新生成值班表；从选择日期往后生成，下方显示的值班人员参考为该日期之前的值班人员</p>
+        <p>
+            上次值班已生成到：{% if last_schedule %}{{ last_schedule.last.date }}{% else %}未生成数据{% endif %}
+            ，日期选择不得超过已生成的日期：{{ end_date }}
+        </p>
+
+        <form method="post" autocomplete="off">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form role="form">
+                        <div class="form-group" id="choose_date">
+                            <label>可选日期</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="choose_date" value="{{ today|date:"Y-m-d" }}" id="id_choose_date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>上次晚班</label>
+                            <select class="form-control m-b" name="last_night_duty">
+                                <option value="">------</option>
+                                {% for employee in all_employee %}
+                                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div style="color:#ADADAD" title="所选日期上一个值班人员">以上参考选择：<span id="id_last_night_duty">{{ last_night_duty.staff }}</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>上次周末</label>
+                            <select class="form-control m-b" name="last_weekend_duty">
+                                <option value="">------</option>
+                                {% for employee in all_employee %}
+                                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <div style="color:#ADADAD" title="所选日期上一个值班人员">以上参考选择：<span id="id_last_weekend_duty">{{ last_weekend_duty.staff }}</span></div>
+                        </div>
+                        {% csrf_token %}
+                        <div>
+                            <button class="btn btn-primary" type="submit">开始生成</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'rest_framework/js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap-datepicker.js' %}" ></script>
+<script>
+        $('#choose_date .input-group.date').datepicker({
+            language: "zh-CN",
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            endDate: "{{ end_date }}",
+            format: "yyyy-mm-dd",
+        });
+
+        $('#id_choose_date').change(function () {
+            let choose_date = $('#id_choose_date').val();
+            $.ajax({
+                url: '{% url "schedule:get_last_duty" %}?this_date=' + choose_date,
+                type: 'GET',
+                dataType: 'json',
+                timeout: 3000,
+                cache: false,
+                success: succFunction, //成功执行方法
+            });
+            function succFunction(last_duty) {
+                let json2cval = eval(last_duty);
+                $('#id_last_night_duty').html(json2cval.last_night_duty_name);
+                $('#id_last_weekend_duty').html(json2cval.last_weekend_duty_name);
+            }
+        });
+    </script>
+{% endblock %}

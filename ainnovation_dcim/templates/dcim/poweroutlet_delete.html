@@ -1,0 +1,8 @@
+{% extends 'utilities/confirmation_form.html' %}
+{% load form_helpers %}
+
+{% block title %}Delete power outlet {{ poweroutlet }}?{% endblock %}
+
+{% block message %}
+    <p>请确认是否删除 <strong>{{ poweroutlet.device }}</strong>?</p>
+{% endblock %}

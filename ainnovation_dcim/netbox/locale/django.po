@@ -1,0 +1,44 @@
+msgid "site"
+msgstr "站点"
+
+msgid "tenant"
+msgstr "租户"
+
+msgid "racks"
+msgstr "机架"
+
+msgid "region"
+msgstr "地区"
+
+msgid "region group"
+msgstr "地区组"
+
+msgid "location"
+msgstr "区组"
+
+msgid "role"
+msgstr "角色"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"
+
+msgid "site"
+msgstr "站点"

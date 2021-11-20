@@ -1,0 +1,50 @@
+{% extends 'schedule/base_duty.html' %}
+
+{% block title %}{{ block.super }} - 值班成员管理{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>值班成员</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>值班成员</h5>
+    </div>
+    <div class="ibox-content">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>名字</th>
+                <th>编号</th>
+                <th>是否排班</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for employee in employee_list %}
+            <tr>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.num }}</td>
+                <td>{% if employee.available %}是{% else %}-{% endif %}</td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="{% url 'schedule:employee_update' employee.id %}">更新</a>
+                    <a class="btn btn-danger btn-xs" href="{% url 'schedule:employee_delete' employee.id %}">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <a class="btn btn-primary btn-sm" href="{% url 'schedule:employee_create' %}">添加</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

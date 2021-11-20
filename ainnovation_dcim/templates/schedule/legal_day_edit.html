@@ -1,0 +1,54 @@
+{% extends 'schedule/base_duty.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'datepicker/bootstrap-datepicker.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}{{ block.super }} - 法定工作日·节假日管理{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>法定工作日·节假日</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>法定工作日·节假日</h5>
+    </div>
+    <div class="ibox-content">
+        <p>根据法定日期，将法定工作日和节假日都记录到表内</p>
+
+        <form method="post" autocomplete="off">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">提交</button>
+                <a class="btn btn-success" href="{% url 'schedule:legal_day_list' %}">返回</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'datepicker/bootstrap-datepicker.js' %}"></script>
+<script>
+        $('#id_date').datepicker({
+            language: "zh-CN",
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            endDate: "{{ end_date }}",
+            format: "yyyy-mm-dd",
+        });
+    </script>
+{% endblock %}

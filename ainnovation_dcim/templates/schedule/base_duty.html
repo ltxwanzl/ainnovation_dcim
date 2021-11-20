@@ -1,0 +1,59 @@
+{% extends 'base/layout.html' %}
+
+{% load static %}
+
+<!--该页使用css-->
+{% block css %}
+
+{% endblock %}
+
+<!--页面标题-->
+{% block title %}{{ block.super }} - 值班安排表{% endblock %}
+
+<!--页面LOGO-->
+{% block logo %}
+<i class="glyphicon glyphicon-list-alt"></i>
+<strong class="font-bold">工作值班安排</strong>
+{% endblock %}
+
+<!--菜单栏缩小时LOGO-->
+{% block logosm %}Duty{% endblock %}
+
+<!--导航菜单-->
+{% block menu %}
+<li class="line dk"></li>
+<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span class="ng-scope">Duty</span>
+</li>
+{% url 'schedule:schedule' as schedule %}
+<li class="{% if schedule == request.path %}active{% endif %}">
+    <a class="" href="{{ schedule }}">
+        <i class="fa fa-calendar"></i>
+        <span class="nav-label">值班安排</span>
+    </a>
+</li>
+{% endblock %}
+
+<!--系统消息-->
+{% block message %}
+
+{% endblock %}
+
+<!--页面标题-->
+{% block head %}值班安排{% endblock %}
+
+<!--面包屑-->
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>值班安排</strong>
+</li>
+{% endblock %}
+
+
+<!--页面使用js-->
+{% block javascript %}
+
+{% endblock %}

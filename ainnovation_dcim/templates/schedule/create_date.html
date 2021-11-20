@@ -1,0 +1,58 @@
+{% extends 'schedule/base_duty.html' %}
+{% load static %}
+
+
+{% block title %}{{ block.super }} - 生成日期{% endblock %}
+
+{% block breadcrumb %}
+<li>
+    <a href="/">主页</a>
+</li>
+<li>
+    <strong>生成日期</strong>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>根据法定工作日·休息日生成日期数据</h5>
+    </div>
+    <div class="ibox-content">
+        <p>若修改了法定修改日，重新提交即可刷新从今天（复选框取消） / 本月第一天（复选框勾选）开始到填写月份的工作值班数据。</p>
+        <p>上次已生成到：{{ last_date.date }}</p>
+
+        <form method="post" autocomplete="off">
+            <div class="form-group" id="choose_date_month">
+                <label>选择月份</label>
+
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" readonly  class="form-control" name="to_one_month" placeholder="填入大于等于本月的值，例如2020.12，如果填写错误将使用默认到这个月底">
+                    <span class="input-group-addon" title="不勾选从今天开始生成数据，勾选将从本月1号开始生成数据"> <input type="checkbox" name="start_flag"> </span>
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="form-group"><button class="btn btn-primary" type="submit">开始生成</button></div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'rest_framework/js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap-datepicker.js' %}" ></script>
+
+<script>
+        $('#choose_date_month .input-group.date').datepicker({
+            language: "zh-CN",
+            minViewMode: 1,
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true,
+            todayHighlight: true,
+<!--            startDate: "{% if last_date %}{{ last_date.date }}{% else %}{{ today }}{% endif %}",-->
+            format: "yyyy-mm",
+        });
+</script>
+{% endblock %}
