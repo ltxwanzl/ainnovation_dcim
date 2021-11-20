@@ -24,7 +24,7 @@ function initStateItems(srcStateId, dstStateId) {
   param.page = 1
   $.ajax({
     type: "GET",
-    url: "/api/v1.0/workflows/" + getWorkflowId() + "/states",
+    url: "/api/workflows/" + getWorkflowId() + "/states",
     cache: false,  //禁用缓存
     data: param,  //传入组装的参数
     dataType: "json",
@@ -58,7 +58,7 @@ function initStateItems(srcStateId, dstStateId) {
     // 获取工作流详情
     $.ajax({
         type: "GET",
-        url: "/api/v1.0/workflows/"+ getWorkflowId(),
+        url: "/api/workflows/"+ getWorkflowId(),
         cache: false,  //禁用缓存
         dataType: "json",
         success: function (result) {
@@ -100,7 +100,7 @@ function initStateItems(srcStateId, dstStateId) {
     console.log(param);
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/workflows/"+ getWorkflowId() + "/custom_fields",
+      url: "/api/workflows/"+ getWorkflowId() + "/custom_fields",
       cache: false,  //禁用缓存
       data: param,  //传入组装的参数
       dataType: "json",
@@ -183,7 +183,7 @@ function initStateItems(srcStateId, dstStateId) {
     console.log(param);
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/workflows/"+ getWorkflowId() + "/states",
+      url: "/api/workflows/"+ getWorkflowId() + "/states",
       cache: false,  //禁用缓存
       data: param,  //传入组装的参数
       dataType: "json",
@@ -281,7 +281,7 @@ function initStateItems(srcStateId, dstStateId) {
     console.log(param);
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/workflows/"+ getWorkflowId() + "/transitions",
+      url: "/api/workflows/"+ getWorkflowId() + "/transitions",
       cache: false,  //禁用缓存
       data: param,  //传入组装的参数
       dataType: "json",
@@ -450,7 +450,7 @@ function getWorkflowId() {
 
     if(!customFieldId){
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/custom_fields",
+      url: "/api/workflows/" + getWorkflowId() + "/custom_fields",
       type: "POST",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -480,7 +480,7 @@ function getWorkflowId() {
     }
     else{
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/custom_fields/" + customFieldId,
+      url: "/api/workflows/" + getWorkflowId() + "/custom_fields/" + customFieldId,
       type: "PATCH",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -523,7 +523,7 @@ function getWorkflowId() {
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/workflows/" + getWorkflowId() + "/custom_fields/" + customFieldId,
+        url: "/api/workflows/" + getWorkflowId() + "/custom_fields/" + customFieldId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -655,7 +655,7 @@ function getWorkflowId() {
     var stateId = $('#stateId').val();
     if(!stateId){
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/states",
+      url: "/api/workflows/" + getWorkflowId() + "/states",
       type: "POST",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -684,7 +684,7 @@ function getWorkflowId() {
     }
     else{
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/states/" + stateId,
+      url: "/api/workflows/" + getWorkflowId() + "/states/" + stateId,
       type: "PATCH",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -727,7 +727,7 @@ function getWorkflowId() {
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/workflows/" + getWorkflowId() + "/states/" + stateId,
+        url: "/api/workflows/" + getWorkflowId() + "/states/" + stateId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -822,7 +822,7 @@ function getWorkflowId() {
 
     if(!transitionId){
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/transitions",
+      url: "/api/workflows/" + getWorkflowId() + "/transitions",
       type: "POST",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -852,7 +852,7 @@ function getWorkflowId() {
     }
     else{
       $.ajax({
-      url: "/api/v1.0/workflows/" + getWorkflowId() + "/transitions/" + transitionId,
+      url: "/api/workflows/" + getWorkflowId() + "/transitions/" + transitionId,
       type: "PATCH",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -896,7 +896,7 @@ function getWorkflowId() {
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/workflows/" + getWorkflowId() + "/transitions/" + transtionId,
+        url: "/api/workflows/" + getWorkflowId() + "/transitions/" + transtionId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",

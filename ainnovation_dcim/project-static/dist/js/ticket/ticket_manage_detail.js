@@ -4,7 +4,7 @@ $( document ).ready(function() {
     // 获取操作记录
     $.ajax({
         type: "GET",
-        url: "/api/v1.0/tickets/" + getTicketId() +"/flowlogs",
+        url: "/api/tickets/" + getTicketId() +"/flowlogs",
         cache: false,  //禁用缓存
         data: {per_page: 10000},  //传入组装的参数
         dataType: "json",
@@ -31,7 +31,7 @@ $(document).ready(function(){
     //获取操作flowstep记录
   $.ajax({
         type: "GET",
-        url: "/api/v1.0/tickets/" + getTicketId() +"/flowsteps",
+        url: "/api/tickets/" + getTicketId() +"/flowsteps",
         cache: false,  //禁用缓存
         data: {per_page: 10000},  //传入组装的参数
         dataType: "json",
@@ -88,7 +88,7 @@ $(document).ready(function() {
   // 工单详情
   $.ajax({
     type: "GET",
-    url: "/api/v1.0/tickets/" + getTicketId(),
+    url: "/api/tickets/" + getTicketId(),
     cache: false,  //禁用缓存
     dataType: "json",
     success: function (result) {
@@ -133,7 +133,7 @@ $(document).ready(function() {
   // 获取工单对应工作流的所有状态
   $.ajax({
     type: "GET",
-    url: "/api/v1.0/tickets/" + getTicketId(),
+    url: "/api/tickets/" + getTicketId(),
     cache: false,  //禁用缓存
     dataType: "json",
     success: function (result) {
@@ -141,7 +141,7 @@ $(document).ready(function() {
         var workflowId = result.data.value.workflow_id;
         $.ajax({
           type: "GET",
-          url: "/api/v1.0/workflows/" + workflowId + "/states",
+          url: "/api/workflows/" + workflowId + "/states",
           cache: false,  //禁用缓存
           dataType: "json",
           success: function (result) {
@@ -232,7 +232,7 @@ function submitDeliverTicket(){
     from_admin:1  // 管理员强制转交
   };
   $.ajax({
-    url: "/api/v1.0/tickets/" + ticketId + '/deliver',
+    url: "/api/tickets/" + ticketId + '/deliver',
     type: "POST",
     processDate: false,
     data : JSON.stringify(params),
@@ -267,7 +267,7 @@ function submitStateTicket(){
   var suggestion = $("#stateSuggestion").val();
   var params = {state_id:targetState, suggestion:suggestion};
   $.ajax({
-    url: "/api/v1.0/tickets/" + ticketId + '/state',
+    url: "/api/tickets/" + ticketId + '/state',
     type: "PUT",
     processDate: false,
     data : JSON.stringify(params),
@@ -302,7 +302,7 @@ function submitCloseTicket(){
   var suggestion = $("#closeSuggestion").val();
   var params = {suggestion:suggestion};
   $.ajax({
-    url: "/api/v1.0/tickets/" + ticketId + '/close',
+    url: "/api/tickets/" + ticketId + '/close',
     type: "POST",
     processDate: false,
     data : JSON.stringify(params),

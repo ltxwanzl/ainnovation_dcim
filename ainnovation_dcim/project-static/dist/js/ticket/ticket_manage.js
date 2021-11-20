@@ -47,7 +47,7 @@ var table = $('#ticket_table').DataTable({
     }
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/tickets",
+      url: "/api/tickets",
       cache: false,  //禁用缓存
       data: param,  //传入组装的参数
       dataType: "json",
@@ -85,7 +85,7 @@ var table = $('#ticket_table').DataTable({
       {render: function(data, type, full){return full.creator_info.alias}},
       { "data": "gmt_created" },
       {render: function(data, type, full){
-        var detail_link = '<a href ="/manage/ticket_manage/' + full.id + '"' +  '>详情</a>';
+        var detail_link = '<a href ="/ticket/ticket_manage/' + full.id + '"' +  '>详情</a>';
         var delDeptButton = '<a onclick="delTicket(' + full.id + ')' + '"' + '>删除</a>';
         return '<div>' + detail_link + '/' + delDeptButton + '</div>'}}
 
@@ -122,7 +122,7 @@ $( document ).ready(function() {
     // 获取用户有权限管理的工作流列表
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/workflow/user_admin",
+      url: "/api/workflows/user_admin",
       cache: false,  //禁用缓存
       dataType: "json",
       success: function (result) {
@@ -145,7 +145,7 @@ $('#search_creator').select2({
         }
     },
     ajax: {
-      url: "/api/v1.0/accounts/users",
+      url: "/api/users",
       delay: 300,
       dataType: 'json',
       data: function (params) {
@@ -192,7 +192,7 @@ function delTicket(ticketId) {
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/tickets/" + ticketId,
+        url: "/api/tickets/" + ticketId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",

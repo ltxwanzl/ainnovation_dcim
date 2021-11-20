@@ -6,7 +6,7 @@ $( document ).ready(function() {
   // 获取通知列表
   $.ajax({
     type: "GET",
-    url: "/api/v1.0/workflows/custom_notices",
+    url: "/api/workflows/custom_notices",
     cache: false,  //禁用缓存
     data: {per_page: 10000},  //传入组装的参数
     dataType: "json",
@@ -207,7 +207,7 @@ function makeUserOption(data) {
     });
     } else{
       $.ajax({
-      url: "/api/v1.0/workflows/" + workflowId,
+      url: "/api/workflows/" + workflowId,
       type: "PATCH",
       processDate: false,
       data : JSON.stringify(paramData),
@@ -276,7 +276,7 @@ function makeUserOption(data) {
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/workflows/" + workflowId,
+        url: "/api/workflows/" + workflowId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",

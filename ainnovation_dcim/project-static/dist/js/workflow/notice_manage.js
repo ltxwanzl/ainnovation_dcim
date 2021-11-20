@@ -23,7 +23,7 @@ $("#noticeModal").on("hidden.bs.modal", function() {
     console.log(param);
     $.ajax({
       type: "GET",
-      url: "/api/v1.0/workflows/custom_notices",
+      url: "/api/workflows/custom_notices",
       cache: false,  //禁用缓存
       data: param,  //传入组装的参数
       dataType: "json",
@@ -78,7 +78,7 @@ function submitNotice(){
       // add notice
       $.ajax({
       type: "POST",
-      url: "/api/v1.0/workflows/custom_notices",
+      url: "/api/workflows/custom_notices",
       cache: false,  //禁用缓存
       data: JSON.stringify(params),  //传入组装的参数
       dataType: "json",
@@ -98,7 +98,7 @@ function submitNotice(){
       // update notice
       $.ajax({
       type: "PATCH",
-      url: "/api/v1.0/workflows/custom_notices/" + noticeId,
+      url: "/api/workflows/custom_notices/" + noticeId,
       cache: false,  //禁用缓存
       data: JSON.stringify(params),  //传入组装的参数
       dataType: "json",
@@ -130,7 +130,7 @@ function submitNotice(){
         // 删除操作
         $.ajax({
         type: "DELETE",
-        url: "/api/v1.0/workflows/custom_notices/" + noticeId,
+        url: "/api/workflows/custom_notices/" + noticeId,
         cache: false,  //禁用缓存
         dataType: "json",
         contentType: "application/json; charset=utf-8",

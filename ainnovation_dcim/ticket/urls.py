@@ -9,7 +9,7 @@ from .views import TicketListView, TicketView, TicketTransition, TicketFlowlog, 
 app_name = 'ticket'
 
 urlpatterns = [
-    path('', TicketListView.as_view(),name='ticket'),
+    path('ticket_list', TicketListView.as_view(),name='ticket'),
     path('<int:ticket_id>', TicketView.as_view(),name='ticket_detail'),
     path('<int:ticket_id>/transitions', TicketTransition.as_view(),name='ticket_transitions'),
     path('<int:ticket_id>/flowlogs', TicketFlowlog.as_view(),name='ticket_flowlogs'),
@@ -28,6 +28,6 @@ urlpatterns = [
     path('<int:ticket_id>/retreat', TicketRetreat.as_view(),name='ticket_retreat'),
     path('states', TicketsStates.as_view(),name='ticket_states'),  # 批量获取工单状态
     path('num_statistics', TicketsNumStatistics.as_view(),name='ticket_num_statistics'),  # 批量获取工单状态
-    path('ticket_manage', views.ticket_manage_view,name='ticket_manage'),
+    path('ticket_manage/', views.ticket_manage_view,name='ticket_manage'),
     path('ticket_manage/<int:ticket_id>', views.ticket_manage_detail_view,name='ticket_manage'),
 ]

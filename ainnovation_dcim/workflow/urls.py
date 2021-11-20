@@ -9,7 +9,7 @@ app_name = 'workflow'
 
 urlpatterns = [
     path('', WorkflowView.as_view(),name='workflow'),
-    path('user_admin', WorkflowUserAdminView.as_view(),name='workflow_user_admin'),
+    path('user_admin', WorkflowUserAdminView.as_view(),name='user_admin'),
     path('<int:workflow_id>/init_state', WorkflowInitView.as_view(),name='workflow_init_state'),
     path('<int:workflow_id>', WorkflowDetailView.as_view(),name='workflow_detail'),
     path('<int:workflow_id>/states', WorkflowStateView.as_view(),name='workflow_states'),

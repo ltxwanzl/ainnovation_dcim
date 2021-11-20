@@ -49,8 +49,7 @@ _patterns = [
     path('user/', include('users.urls')),
     path('virtualization/', include('virtualization.urls')),
     path('schedule/', include('schedule.urls', namespace='schedule')),
-    path('ticket/', include('ticket.urls', namespace='ticket')),
-    path('workflow/', include('workflow.urls', namespace='workflow')),
+    path('ticket/', include('ticket.urls', namespace='tickets')),
 
     # API
     path('api/', APIRootView.as_view(), name='api-root'),
@@ -64,6 +63,8 @@ _patterns = [
     path('api/status/', StatusView.as_view(), name='api-status'),
     path('api/docs/', schema_view.with_ui('swagger', cache_timeout=86400), name='api_docs'),
     path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=86400), name='api_redocs'),
+    path('api/tickets/', include('ticket.urls')),
+    path('api/workflows/', include('workflow.urls',namespace='workflow')),
     re_path(r'^api/swagger(?P<format>.json|.yaml)$', schema_view.without_ui(cache_timeout=86400), name='schema_swagger'),
 
     # GraphQL
